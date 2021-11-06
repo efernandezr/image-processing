@@ -1,12 +1,24 @@
 {
   "name": "image-processing",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "^2.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efernandezr/image-processing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/efernandezr/image-processing/issues"
+  },
+  "homepage": "https://github.com/efernandezr/image-processing#readme",
+  "description": ""
 }
