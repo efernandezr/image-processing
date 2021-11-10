@@ -1,6 +1,7 @@
 import express from 'express';
 const app = express();
 const port = 3000;
+
 app.get('/api', (req, res) => {
   res.send('Hello, world!');
 });
@@ -13,4 +14,5 @@ const myFunc = (num: number): number => {
   return num * num;
 };
 
-export default myFunc;
+// export default  myFunc;
+export default app;
