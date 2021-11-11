@@ -8,8 +8,7 @@ const imageResize = async (
   imgHeight: number
 ): Promise<void> => {
   const imagePath = `${config.ASSETS_PATH}/full/${imgName}.jpeg`;
-  console.log(`${config.ASSETS_PATH}/full/${imgName}.jpg`);
-  const outputPath = `${config.ASSETS_PATH}/thumb/${imgName}${imgWidth}X${imgHeight}.jpg`;
+  const outputPath = `${config.ASSETS_PATH}/thumb/${imgName}${imgWidth}X${imgHeight}_thumb.jpeg`;
   try {
     await sharp(imagePath)
       .resize(imgWidth, imgHeight, { fit: 'contain' })

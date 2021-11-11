@@ -39,15 +39,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// import { error } from 'console';
 var sharp_1 = __importDefault(require("sharp"));
 var config_1 = __importDefault(require("../config"));
 var imageResize = function (imgName, imgWidth, imgHeight) { return __awaiter(void 0, void 0, void 0, function () {
-    var imagePath, outputPath, e_1;
+    var imagePath, outputPath, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                imagePath = config_1.default.ASSETS_PATH + "/full/" + imgName + ".jpg";
-                outputPath = config_1.default.ASSETS_PATH + "/thumb/" + imgName + imgWidth + "X" + imgHeight + ".jpg";
+                imagePath = config_1.default.ASSETS_PATH + "/full/" + imgName + ".jpeg";
+                outputPath = config_1.default.ASSETS_PATH + "/thumb/" + imgName + imgWidth + "X" + imgHeight + "_thumb.jpeg";
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
@@ -58,9 +59,9 @@ var imageResize = function (imgName, imgWidth, imgHeight) { return __awaiter(voi
                 _a.sent();
                 return [3 /*break*/, 4];
             case 3:
-                e_1 = _a.sent();
-                console.error('Error in imageProcess func', e_1);
-                throw e_1;
+                err_1 = _a.sent();
+                console.error('Error procesando imagen', err_1);
+                throw err_1;
             case 4: return [2 /*return*/];
         }
     });
