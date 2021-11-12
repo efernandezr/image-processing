@@ -39,21 +39,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import myFunc from '.././src/index';
 var supertest_1 = __importDefault(require("supertest"));
 var _1 = __importDefault(require("../."));
-// it('expect myFunc(5) to equal 25', () => {
-//   expect(myFunc(5)).toEqual(25);
-// });
-// describe(“suite description”, () => {
-//     it(“describes the spec”, () => {
-//         const myVar = true;
-//         expect(myVar).toBe(true);
-//     });
-// });
-// test end points
-// import supertest from 'supertest';
-// import app from '../index'; //app server  (express)
+var imgExist_1 = __importDefault(require("../utilities/imgExist"));
+var imageResize_1 = __importDefault(require("../utilities/imageResize"));
+var config_1 = __importDefault(require("../config"));
 // Tests endpoint working ok
 var request = (0, supertest_1.default)(_1.default);
 describe('Test endpoint responses', function () {
@@ -77,6 +67,35 @@ describe('Test endpoint responses', function () {
                 case 1:
                     response = _a.sent();
                     expect(response.status).toEqual(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+describe('Tests helper methods and middleware for image processing', function () {
+    it('checks if imgExists() is true when image exists in thumb folder', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, imgExist_1.default)(config_1.default.ASSETS_PATH + "/thumb/fjord500X126_thumb.jpeg")];
+                case 1:
+                    result = _a.sent();
+                    expect(result).toEqual(true);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('checks if imageResize() correctly resizes image', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, imageResize_1.default)('fjord', 500, 500)];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, (0, imgExist_1.default)(config_1.default.ASSETS_PATH + "/thumb/fjord500X500_thumb.jpeg")];
+                case 2:
+                    result = _a.sent();
+                    expect(result).toEqual(true);
                     return [2 /*return*/];
             }
         });
