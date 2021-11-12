@@ -43,29 +43,47 @@ var express_1 = __importDefault(require("express"));
 var imageResize_1 = __importDefault(require("../../utilities/imageResize"));
 var config_1 = __importDefault(require("../../config"));
 var imgExist_1 = __importDefault(require("../../utilities/imgExist"));
+var paramsChecker_1 = __importDefault(require("../../utilities/paramsChecker"));
+var logger_1 = __importDefault(require("../../utilities/logger"));
 var images = express_1.default.Router();
-images.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var fileName, width, height, outputImagePath, fileExist;
+images.get('/', logger_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var fileName, width, height, outputImagePath, fileExist, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                if (!(0, paramsChecker_1.default)(req)) return [3 /*break*/, 8];
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 6, , 7]);
                 fileName = req.query.filename;
                 width = parseInt(req.query.width);
                 height = parseInt(req.query.height);
                 outputImagePath = config_1.default.ASSETS_PATH + "/thumb/" + fileName + width + "X" + height + "_thumb.jpeg";
                 return [4 /*yield*/, (0, imgExist_1.default)(outputImagePath)];
-            case 1:
-                fileExist = _a.sent();
-                if (!!fileExist) return [3 /*break*/, 3];
-                return [4 /*yield*/, (0, imageResize_1.default)("" + fileName, width, height)];
             case 2:
+                fileExist = _a.sent();
+                if (!!fileExist) return [3 /*break*/, 4];
+                return [4 /*yield*/, (0, imageResize_1.default)("" + fileName, width, height)];
+            case 3:
                 _a.sent();
                 res.status(200).sendFile(outputImagePath);
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 5];
+            case 4:
                 res.status(200).sendFile(outputImagePath);
-                _a.label = 4;
-            case 4: return [2 /*return*/];
+                _a.label = 5;
+            case 5: return [3 /*break*/, 7];
+            case 6:
+                err_1 = _a.sent();
+                console.log(err_1);
+                res
+                    .status(200)
+                    .sendFile('error while processing image path, please try again');
+                return [3 /*break*/, 7];
+            case 7: return [3 /*break*/, 9];
+            case 8:
+                res.status(200).send('please use the correct image parameters');
+                _a.label = 9;
+            case 9: return [2 /*return*/];
         }
     });
 }); });

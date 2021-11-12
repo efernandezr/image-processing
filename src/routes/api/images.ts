@@ -2,23 +2,16 @@ import express from 'express';
 import imageResize from '../../utilities/imageResize';
 import config from '../../config';
 import imgExist from '../../utilities/imgExist';
+import paramsChecker from '../../utilities/paramsChecker';
+import logger from '../../utilities/logger';
 
 const images = express.Router();
 
-images.get('/', async (req, res) => {
-  const fileName = req.query.filename;
-  const width = parseInt(req.query.width as string);
-  const height = parseInt(req.query.height as string);
-  console.log(width);
-  console.log(height);
-  console.log(!isNaN(width));
-  console.log(!isNaN(height));
-
-  if (fileName !== undefined && !isNaN(width) && !isNaN(height)) {
+images.get('/', logger, async (req, res) => {
+  if (paramsChecker(req)) {
     try {
       const fileName = req.query.filename;
       const width = parseInt(req.query.width as string);
-
       const height = parseInt(req.query.height as string);
       const outputImagePath = `${config.ASSETS_PATH}/thumb/${fileName}${width}X${height}_thumb.jpeg`;
       const fileExist = await imgExist(outputImagePath);
