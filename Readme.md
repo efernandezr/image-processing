@@ -4,21 +4,40 @@
 
 ##Get Started
 
-<p>To get started with the api, clone this project at [https://github.com/efernandezr/image.processing.git](https://github.com/efernandezr/image.processing.git) or using the terminal with xxx. </p>
+<p>To get started with the api, clone this project at [https://github.com/efernandezr/image-processing.git](https://github.com/efernandezr/image-processing.git)</p>
 
 ## Installation
 
-//: to enter the project dir
+to enter the project dir
+
+```
 cd Image-processing
-//: to install dependencies
+```
+
+to install `dependencies`
+
+```
 npm install
-//: to start the server (using nodemon)
+```
+
+to start the server (using nodemon)
+
+```
 npm run start
-//: tests created with Jasmine
+```
+
+tests created with Jasmine
+
+```
 npm run test
-//: to execute prettier and Eslint scriptz
+```
+
+to execute prettier and Eslint scriptz
+
+```
 npm run prettier
 npm run lint
+```
 
 ## How to process an image
 
