@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var paramsChecker_1 = __importDefault(require("./paramsChecker"));
+//logs resizing activity in console
 var logger = function (req, res, next) {
     if ((0, paramsChecker_1.default)(req)) {
         var fileName = req.query.filename;
@@ -12,7 +13,7 @@ var logger = function (req, res, next) {
         console.log(fileName + " image processed -> size:" + width + "x" + height + " px.");
     }
     else {
-        console.log('couldnt process any image, correct params not present in url');
+        console.log('couldnt process any image, please correct the params or use existing image');
     }
     next();
 };

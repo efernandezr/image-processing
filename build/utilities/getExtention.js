@@ -35,25 +35,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var promises_1 = require("fs/promises");
-var fs_1 = require("fs");
-// function that checks if image exists in specific path
-var imgExist = function (imgPath) { return __awaiter(void 0, void 0, void 0, function () {
-    var error_1;
+var path_1 = __importDefault(require("path"));
+var lodash_1 = __importDefault(require("lodash"));
+var extention;
+// function gets extention from file in specific path
+var getExtention = function (arr, name) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, (0, promises_1.access)(imgPath, fs_1.constants.R_OK | fs_1.constants.W_OK)];
-            case 1:
-                _a.sent();
-                return [2 /*return*/, true];
-            case 2:
-                error_1 = _a.sent();
-                return [2 /*return*/, false];
-            case 3: return [2 /*return*/];
-        }
+        lodash_1.default.forEach(arr, function (file) {
+            if (path_1.default.basename(file, path_1.default.extname(file)) === name) {
+                extention = path_1.default.extname(file);
+            }
+        });
+        return [2 /*return*/, extention];
     });
 }); };
-exports.default = imgExist;
+exports.default = getExtention;

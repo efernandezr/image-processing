@@ -77,7 +77,7 @@ describe('Tests helper methods and middleware for image processing', function ()
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, imgExist_1.default)(config_1.default.ASSETS_PATH + "/thumb/fjord500X126_thumb.jpeg")];
+                case 0: return [4 /*yield*/, (0, imgExist_1.default)(config_1.default.ASSETS_PATH + "/thumb/DEMO_fjord500X121_thumb.jpeg")];
                 case 1:
                     result = _a.sent();
                     expect(result).toEqual(true);
@@ -89,10 +89,25 @@ describe('Tests helper methods and middleware for image processing', function ()
         var result;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, imageResize_1.default)('fjord', 500, 500)];
+                case 0: return [4 /*yield*/, (0, imageResize_1.default)('fjord', 500, 500, '.jpeg')];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, (0, imgExist_1.default)(config_1.default.ASSETS_PATH + "/thumb/fjord500X500_thumb.jpeg")];
+                case 2:
+                    result = _a.sent();
+                    expect(result).toEqual(true);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('checks if png images is processed correctly', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, imageResize_1.default)('goku', 500, 500, '.png')];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, (0, imgExist_1.default)(config_1.default.ASSETS_PATH + "/thumb/goku500X500_thumb.png")];
                 case 2:
                     result = _a.sent();
                     expect(result).toEqual(true);

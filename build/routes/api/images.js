@@ -45,25 +45,38 @@ var config_1 = __importDefault(require("../../config"));
 var imgExist_1 = __importDefault(require("../../utilities/imgExist"));
 var paramsChecker_1 = __importDefault(require("../../utilities/paramsChecker"));
 var logger_1 = __importDefault(require("../../utilities/logger"));
+var path_1 = __importDefault(require("path"));
+var fs_1 = __importDefault(require("fs"));
+var getExtention_1 = __importDefault(require("../../utilities/getExtention"));
 var images = express_1.default.Router();
+var fullDirectoryPath = path_1.default.join(config_1.default.ASSETS_PATH, 'full');
+var thumbDirectoryPath = path_1.default.join(config_1.default.ASSETS_PATH, 'thumb');
 images.get('/', logger_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var fileName, width, height, outputImagePath, fileExist, err_1;
+    var fileName, width, height, files, extention, outputImagePath, fileExist, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!(0, paramsChecker_1.default)(req)) return [3 /*break*/, 8];
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 6, , 7]);
+                _a.trys.push([0, 8, , 9]);
+                if (!(0, paramsChecker_1.default)(req)) return [3 /*break*/, 6];
                 fileName = req.query.filename;
                 width = parseInt(req.query.width);
                 height = parseInt(req.query.height);
-                outputImagePath = config_1.default.ASSETS_PATH + "/thumb/" + fileName + width + "X" + height + "_thumb.jpeg";
+                files = fs_1.default.readdirSync(fullDirectoryPath);
+                return [4 /*yield*/, (0, getExtention_1.default)(files, fileName)];
+            case 1:
+                extention = _a.sent();
+                //checks if file was found in folder /full
+                if (extention == undefined) {
+                    res
+                        .status(200)
+                        .send('Image name doesnt exist in /full folder, please check');
+                }
+                outputImagePath = thumbDirectoryPath + "/" + fileName + width + "X" + height + "_thumb" + extention;
                 return [4 /*yield*/, (0, imgExist_1.default)(outputImagePath)];
             case 2:
                 fileExist = _a.sent();
                 if (!!fileExist) return [3 /*break*/, 4];
-                return [4 /*yield*/, (0, imageResize_1.default)("" + fileName, width, height)];
+                return [4 /*yield*/, (0, imageResize_1.default)("" + fileName, width, height, extention)];
             case 3:
                 _a.sent();
                 res.status(200).sendFile(outputImagePath);
@@ -73,16 +86,18 @@ images.get('/', logger_1.default, function (req, res) { return __awaiter(void 0,
                 _a.label = 5;
             case 5: return [3 /*break*/, 7];
             case 6:
+                res
+                    .status(200)
+                    .send('Image parameters specified are not correct, please check path structure and info');
+                _a.label = 7;
+            case 7: return [3 /*break*/, 9];
+            case 8:
                 err_1 = _a.sent();
                 console.log(err_1);
                 res
                     .status(200)
                     .sendFile('error while processing image path, please try again');
-                return [3 /*break*/, 7];
-            case 7: return [3 /*break*/, 9];
-            case 8:
-                res.status(200).send('please use the correct image parameters');
-                _a.label = 9;
+                return [3 /*break*/, 9];
             case 9: return [2 /*return*/];
         }
     });

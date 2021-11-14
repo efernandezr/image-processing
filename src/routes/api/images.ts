@@ -6,82 +6,52 @@ import paramsChecker from '../../utilities/paramsChecker';
 import logger from '../../utilities/logger';
 import path from 'path';
 import fs from 'fs';
-import _ from 'lodash';
+import getExtention from '../../utilities/getExtention';
 
 const images = express.Router();
 const fullDirectoryPath = path.join(config.ASSETS_PATH, 'full');
+const thumbDirectoryPath = path.join(config.ASSETS_PATH, 'thumb');
 
 images.get('/', logger, async (req, res) => {
-  let inputPath: string;
-  let extention: string;
   try {
+    //check if url params is correctly set
     if (paramsChecker(req)) {
-      const fileName = req.query.filename;
+      const fileName = req.query.filename as unknown as string;
       const width = parseInt(req.query.width as string);
       const height = parseInt(req.query.height as string);
 
-      // let inputPath: string;
-      // let extention: string;
-
-      // fs.readdir(fullDirectoryPath, (err, files) => {
-      //   if (err) {
-      //     return console.log('Picture cant be found, check parameters: ' + err);
-      //   } else {
-      //     _.forEach(files, (file: string) => {
-      //       if (path.basename(file, path.extname(file)) === fileName) {
-      //         console.log(path.basename(file, path.extname(file)) === fileName);
-      //         inputPath = path.join(
-      //           config.ASSETS_PATH,
-      //           'full',
-      //           `${fileName}${path.extname(file)}`
-      //         );
-      //         console.log(`1) ${inputPath}`);
-      //         extention = path.extname(file);
-      //         console.log(`2)${extention}`);
-      //       }
-      //     });
-      //     if (extention === undefined) {
-      //       console.log(extention);
-      //       res.status(200).send('Image name doesnt exist, please check');
-      //     }
-      //   }
-      // });
-
+      // checks if image in params exists in /full folder and gets image extention to pass it o imgExist()
       const files = fs.readdirSync(fullDirectoryPath);
-      _.forEach(files, (file: string) => {
-        if (path.basename(file, path.extname(file)) === fileName) {
-          console.log(path.basename(file, path.extname(file)) === fileName);
-          inputPath = path.join(
-            config.ASSETS_PATH,
-            'full',
-            `${fileName}${path.extname(file)}`
-          );
-          console.log(`1) ${inputPath}`);
-          extention = path.extname(file);
-          console.log(`2)${extention}`);
-        }
-      });
-      if (extention === undefined) {
-        console.log(extention);
-        res.status(200).send('Image name doesnt exist, please check');
-      }
+      const extention = await getExtention(files, fileName);
 
-      const outputImagePath = `${config.ASSETS_PATH}/thumb/${fileName}${width}X${height}_thumb.jpeg`;
+      //checks if file was found in folder /full
+      if (extention == undefined) {
+        res
+          .status(200)
+          .send('Image name doesnt exist in /full folder, please check');
+      }
+      //creates output path, can be used for multiple extentions
+      const outputImagePath = `${thumbDirectoryPath}/${fileName}${width}X${height}_thumb${extention}`;
+      //checks if file exists already as thumbnail and resizes it
       const fileExist = await imgExist(outputImagePath);
       if (!fileExist) {
-        await imageResize(`${fileName}`, width, height);
+        await imageResize(`${fileName}`, width, height, extention);
         res.status(200).sendFile(outputImagePath);
       } else {
         res.status(200).sendFile(outputImagePath);
       }
     } else {
-      res.status(200).send('Image path specified is not correct, please check');
+      res
+        .status(200)
+        .send(
+          'Image parameters specified are not correct, please check path structure and info'
+        );
     }
   } catch (err) {
     console.log(err);
     res
       .status(200)
-      .sendFile('error while processing image path, please try again (2)');
+      .sendFile('error while processing image path, please try again');
   }
 });
 

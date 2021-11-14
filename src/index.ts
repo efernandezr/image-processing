@@ -1,7 +1,9 @@
 import express from 'express';
 import routes from './routes/index';
+import config from './config';
+
 const app = express();
-const port = 3000;
+const port = config.PORT;
 
 app.use('/api', routes);
 

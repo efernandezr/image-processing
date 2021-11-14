@@ -42,13 +42,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import { error } from 'console';
 var sharp_1 = __importDefault(require("sharp"));
 var config_1 = __importDefault(require("../config"));
-var imageResize = function (imgName, imgWidth, imgHeight) { return __awaiter(void 0, void 0, void 0, function () {
+var imageResize = function (imgName, imgWidth, imgHeight, ext) { return __awaiter(void 0, void 0, void 0, function () {
     var imagePath, outputPath, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                imagePath = config_1.default.ASSETS_PATH + "/full/" + imgName + ".jpeg";
-                outputPath = config_1.default.ASSETS_PATH + "/thumb/" + imgName + imgWidth + "X" + imgHeight + "_thumb.jpeg";
+                imagePath = config_1.default.ASSETS_PATH + "/full/" + imgName + ext;
+                outputPath = config_1.default.ASSETS_PATH + "/thumb/" + imgName + imgWidth + "X" + imgHeight + "_thumb" + ext;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
@@ -60,7 +60,7 @@ var imageResize = function (imgName, imgWidth, imgHeight) { return __awaiter(voi
                 return [3 /*break*/, 4];
             case 3:
                 err_1 = _a.sent();
-                console.error('Error procesando imagen', err_1);
+                console.error('Error while processing image-check file name or url parameters');
                 throw err_1;
             case 4: return [2 /*return*/];
         }
