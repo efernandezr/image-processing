@@ -21,7 +21,7 @@ describe('Test endpoint responses', () => {
 describe('Tests helper methods and middleware for image processing', () => {
   it('checks if imgExists() is true when image exists in thumb folder', async () => {
     const result = await imgExist(
-      `${config.ASSETS_PATH}/thumb/fjord500X126_thumb.jpeg`
+      `${config.ASSETS_PATH}/thumb/fjord500X121_thumb.jpeg`
     );
     expect(result).toEqual(true);
   });
