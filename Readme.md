@@ -47,4 +47,4 @@ npm run lint
 - The image you want to resize (IMAGE_NAME in the url) must be already in the /assets/full folder, otherwise it will display a warning message
 - The output image will be displayed after resizing is successgul and the thumbnail created will be places in the /assets/thumb folder
 - Any accepted image file format will be processed (formats allowed are JPEG, PNG, WebP, AVIF, TIFF, DZI, and libvips' V)
-- The api uses a custom Middleware (logger.md) created to log the processing activity in the console
+- The api uses a custom Middleware (logger.ts) created to log the processing activity in the console
